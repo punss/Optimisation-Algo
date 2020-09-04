@@ -13,8 +13,8 @@ class Vector:
 
 
 def fofx(ind):
-    fx = (((ind.params[0] + 2*ind.params[1] - 7)**2)
-    	+ ((2*ind.params[0] + ind.params[1] - 5)**2))
+    fx = (((ind.params[0]**2 + ind.params[1] - 11)**2)
+    	+ ((ind.params[0] + ind.params[1]**2 - 7)**2))
     return fx
 
 
