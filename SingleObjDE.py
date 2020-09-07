@@ -9,14 +9,18 @@ seed(1)
 class Vector:
     def __init__(self, D):
         self.params = (np.ones((1, D)).tolist())[0]
+    def fofx(self):
+        fx = 0
+        for i in self.params:
+            fx += i**2
+        return fx
 
-
-def fofx(ind):
+'''def fofx(ind):
     fx = 0
     for i in ind.params:
         fx += i**2;
     return fx
-
+'''
 
 def init_pop(NP):
     vector_array = []
@@ -29,9 +33,9 @@ def init_pop(NP):
 
 
 def check_objective(target_vector, trial_vector):
-    if fofx(target_vector) >= fofx(trial_vector):
+    if target_vector.fofx() >= trial_vector.fofx():
         return trial_vector
-    elif fofx(trial_vector) > fofx(target_vector):
+    elif target_vector.fofx() < trial_vector.fofx():
         return target_vector
 
 
@@ -68,7 +72,7 @@ def crossover(vector_array, cross_prob=0.6, weight=0.8):
 def main():
     vector_population = init_pop(NP)
     print("Initial population: ")
-    print(min(fofx(el) for el in vector_population))
+    print(min(el.fofx() for el in vector_population))
     print("")
     
     for generation in range(1,1001):
@@ -76,7 +80,7 @@ def main():
         print("Generation "+str(generation)+":")
         # for el in vector_population:
         #     print(fofx(el))
-        ans = (min(fofx(el) for el in vector_population))
+        ans = (min(el.fofx() for el in vector_population))
         print (ans)
         if(ans<= 1e-10): return
         print("")
