@@ -1,5 +1,6 @@
 import numpy as np
 from random import choice, randint, random, choices, seed
+import math
 import sys
 
 D = 2  # Number of parameters in function to be optimised
@@ -13,8 +14,8 @@ class Vector:
 
 
 def fofx(ind):
-    fx = (((ind.params[0]**2 + ind.params[1] - 11)**2)
-    	+ ((ind.params[0] + ind.params[1]**2 - 7)**2))
+    x, y = ind.params[0], ind.params[1]
+    fx = -(math.cos(x)*math.cos(y)*math.exp(-(((x-math.pi)**2) + ((y-math.pi)**2))))
     return fx
 
 
@@ -71,27 +72,27 @@ def main():
     print(min(fofx(el) for el in vector_population))
     print("")
     
+    ans = 1000
+    va = [0, 0]
+
     for generation in range(1,1001):
         vector_population = crossover(vector_population)
         print("Generation "+str(generation)+":")
         # for el in vector_population:
         #     print(fofx(el))
         # ans = (min(fofx(el) for el in vector_population))
-        ans = sys.maxsize
-        va = [0, 0]
+        
         for el in vector_population:
         	temp = ans
         	ans = min(ans, fofx(el))
         	if ans != temp:
         		va[0], va[1] = el.params[0], el.params[1]
 
-        print (ans)
-
-        if(ans<= 1e-310):
-        	print(va)
-        	return
+        if(ans == -1):
+        	break
         print("")
 
+    print(va, ans)
 
 if __name__ == "__main__":
     main()
